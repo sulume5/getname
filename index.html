@@ -1,118 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>証明写真撮影</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-        }
-        .container {
-            position: relative;
-            width: 300px;
-            height: 300px;
-            border: 5px solid #000;
-            overflow: hidden;
-            border-radius: 10px;
-        }
-        video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .capture-button {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .capture-button:hover {
-            background-color: #0056b3;
-        }
-        canvas {
-            display: none;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <video id="video" autoplay></video>
-        <button class="capture-button" onclick="capturePhoto()">Capture</button>
-        <canvas id="canvas"></canvas>
-    </div>
-    <script>
-        async function startCamera() {
-            const video = document.getElementById('video');
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
-                video.srcObject = stream;
-            } catch (error) {
-                console.error('Error accessing camera: ', error);
-            }
-        }
+document.addEventListener('DOMContentLoaded', function() {
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const context = canvas.getContext('2d');
+    const captureButton = document.getElementById('capture');
+    const overlay = document.querySelector('.overlay');
 
-        function capturePhoto() {
-            const video = document.getElementById('video');
-            const canvas = document.getElementById('canvas');
-            const context = canvas.getContext('2d');
+    // カメラのストリームを取得
+    navigator.mediaDevices.getUserMedia({ video:  { facingMode: 'environment' } })
+        .then(function(stream) {
+            video.srcObject = stream;
+            video.play();
+        })
+        .catch(function(error) {
+            console.error('カメラのアクセスに失敗しました:', error);
+        });
 
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
+    captureButton.addEventListener('click', function() {
+        const rect = overlay.getBoundingClientRect();
+        canvas.width = rect.width;
+        canvas.height = rect.height;
 
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        context.drawImage(video, rect.left, rect.top, rect.width, rect.height, 0, 0, rect.width, rect.height);
 
-            // Convert canvas to data URL
-            const dataUrl = canvas.toDataURL('image/jpeg');
+        // 画像を表示または保存する処理をここに追加
+        const img = canvas.toDataURL('image/png');
+        console.log(img); // Base64の画像データURLをログに表示
 
-            // Send the image to the server
-            uploadImage(dataUrl);
-        }
-
-        function uploadImage(dataUrl) {
-            const formData = new FormData();
-            formData.append('file', dataUrlToBlob(dataUrl), 'photo.jpg');
-
-            fetch('YOUR_SERVER_ENDPOINT', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert('Upload successful!');
-            })
-            .catch(error => {
-                console.error('Upload failed: ', error);
-            });
-        }
-
-        function dataUrlToBlob(dataUrl) {
-            const [header, data] = dataUrl.split(',');
-            const mime = header.match(/:(.*?);/)[1];
-            const bytes = atob(data);
-            const arrayBuffer = new ArrayBuffer(bytes.length);
-            const uint8Array = new Uint8Array(arrayBuffer);
-
-            for (let i = 0; i < bytes.length; i++) {
-                uint8Array[i] = bytes.charCodeAt(i);
-            }
-
-            return new Blob([uint8Array], { type: mime });
-        }
-
-        // Start the camera when the page loads
-        window.onload = startCamera;
-    </script>
-</body>
-</html>
+        // ダウンロードリンクを作成して画像をダウンロードする
+        const link = document.createElement('a');
+        link.href = img;
+        link.download = 'photo.png';
+        link.click();
+    });
+});
