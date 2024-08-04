@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const overlay = document.querySelector('.overlay');
 
     // カメラのストリームを取得
-    navigator.mediaDevices.getUserMedia({ video: true })
+    navigator.mediaDevices.getUserMedia({ video:{ facingMode: 'environment' }})
         .then(function(stream) {
             video.srcObject = stream;
             video.play();
