@@ -21,7 +21,7 @@ video {
 .overlay {
     position: absolute;
     top: 30px;
-    right: 80px;
+    left: 180px;
     width: 30px;
     height: 180px;
     border: 2px solid red;
