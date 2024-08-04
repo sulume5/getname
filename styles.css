@@ -13,17 +13,17 @@ body {
 }
 
 video {
-            width: 320px; /* 必要に応じて調整 */
-            height: 240px; /* 必要に応じて調整 */
-            background: #000; /* プレビューが黒で表示されるように */
-        }
+    width: 320px; /* 必要に応じて調整 */
+    height: 240px; /* 必要に応じて調整 */
+    background: #000; /* プレビューが黒で表示されるように */
+}
 
 .overlay {
     position: absolute;
-    top: 20px;
-    left: 20px;
-    width: 300px;
-    height: 400px;
+    top: 30px;
+    right: 80px;
+    width: 30px;
+    height: 180px;
     border: 2px solid red;
     box-sizing: border-box;
     pointer-events: none;
