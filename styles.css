@@ -13,9 +13,10 @@ body {
 }
 
 video {
-    width: 100%;
-    height: auto;
-}
+            width: 320px; /* 必要に応じて調整 */
+            height: 240px; /* 必要に応じて調整 */
+            background: #000; /* プレビューが黒で表示されるように */
+        }
 
 .overlay {
     position: absolute;
