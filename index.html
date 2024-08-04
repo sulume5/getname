@@ -1,70 +1,18 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>証明写真カメラ</title>
-    <style>
-        #video {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-        }
-        #photoFrame {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 300px;
-            height: 400px;
-            margin-top: -200px; /* (height/2) */
-            margin-left: -150px; /* (width/2) */
-            border: 5px solid red;
-            box-sizing: border-box;
-        }
-        #container {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        #canvas {
-            display: none;
-        }
-    </style>
+    <title>証明写真</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="container">
-        <video id="video" autoplay></video>
-        <div id="photoFrame"></div>
-        <canvas id="canvas"></canvas>
+    <div class="container">
+        <video muted autoplay playsinline id="video" class="huga"></video>
+        <div class="overlay"></div>
+        <button id="capture">写真を撮る</button>
+        <canvas id="canvas" style="display:none;"></canvas>
     </div>
-    <button id="snap">撮影</button>
-    <script>
-        const video = document.getElementById('video');
-        const canvas = document.getElementById('canvas');
-        const snap = document.getElementById('snap');
-        const context = canvas.getContext('2d');
-
-        navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
-            .then(stream => {
-                video.srcObject = stream;
-                video.play();
-            })
-            .catch(err => {
-                console.error("カメラの起動に失敗しました: " + err);
-            });
-
-        snap.addEventListener('click', () => {
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-            // ここでキャンバスの画像データを取得することができます
-            const imageDataURL = canvas.toDataURL('image/png');
-            console.log(imageDataURL); // デバッグ用にコンソールに出力
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
