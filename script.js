@@ -19,8 +19,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const rect = overlay.getBoundingClientRect();
         canvas.width = rect.width;
         canvas.height = rect.height;
+        video.videoWidth = canvas.width;
+        video.videoHeight =canvas.height;
 
-        context.drawImage(video, rect.left, rect.top, rect.width, rect.height, rect.left, rect.top, rect.width, rect.height);
+        context.drawImage(video, rect.left, rect.top, rect.width, rect.height, 0, 0, rect.width, rect.height);
 
         // 画像を表示または保存する処理をここに追加
         const img = canvas.toDataURL('image/png');
