@@ -1,35 +1,18 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const video = document.getElementById('video');
-    const canvas = document.getElementById('canvas');
-    const context = canvas.getContext('2d');
-    const captureButton = document.getElementById('capture');
-    const overlay = document.querySelector('.overlay');
-
-    // カメラのストリームを取得
-    navigator.mediaDevices.getUserMedia({ video:  { facingMode: 'environment' } })
-        .then(function(stream) {
-            video.srcObject = stream;
-            video.play();
-        })
-        .catch(function(error) {
-            console.error('カメラのアクセスに失敗しました:', error);
-        });
-
-    captureButton.addEventListener('click', function() {
-        const rect = overlay.getBoundingClientRect();
-        canvas.width = rect.width;
-        canvas.height = rect.height;
-
-        context.drawImage(video, rect.left, rect.top, rect.width, rect.height, 0, 0, rect.width, rect.height);
-
-        // 画像を表示または保存する処理をここに追加
-        const img = canvas.toDataURL('image/png');
-        console.log(img); // Base64の画像データURLをログに表示
-
-        // ダウンロードリンクを作成して画像をダウンロードする
-        const link = document.createElement('a');
-        link.href = img;
-        link.download = 'photo.png';
-        link.click();
-    });
-});
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>証明写真</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <video muted autoplay playsinline id="video" class="huga"></video>
+        <div class="overlay"></div>
+        <button id="capture">写真を撮る</button>
+        <canvas id="canvas" style="display:none;"></canvas>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
