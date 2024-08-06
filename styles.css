@@ -13,8 +13,8 @@ body {
 }
 
 video {
-    width: 320px; /* 必要に応じて調整 */
-    height: 240px; /* 必要に応じて調整 */
+    width: 30px; /* 必要に応じて調整 */
+    height: 180px; /* 必要に応じて調整 */
     background: #000; /* プレビューが黒で表示されるように */
 }
 
@@ -31,6 +31,7 @@ video {
 
 button {
     position: absolute;
+    top: 50px;
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
