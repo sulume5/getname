@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
         canvas.width = rect.width;
         canvas.height = rect.height;
 
-        context.drawImage(video, rect.left, rect.top, rect.width, rect.height, 0, 0, rect.width, rect.height);
+        context.drawImage(video, rect.left, rect.top, rect.width, rect.height, rect.left, rect.top, rect.width, rect.height);
 
         // 画像を表示または保存する処理をここに追加
         const img = canvas.toDataURL('image/png');
