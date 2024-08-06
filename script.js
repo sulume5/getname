@@ -16,12 +16,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
     captureButton.addEventListener('click', function() {
-        //const rect = overlay.getBoundingClientRect();
-        //canvas.width = rect.width;
-        //canvas.height = rect.height;
-        //video.videoWidth = canvas.width;
-        //video.videoHeight = canvas.height;
-        context.drawImage(video, 0, 0, 60, 360, 0, 0, 60, 360);
+        const overlayRect = overlay.getBoundingClientRect();
+        const videoRect = video.getBoundingClientRect();
+
+         // カメラ映像から指定された範囲をキャンバスに描画
+         canvas.width = overlayRect.width;
+         canvas.height = overlayRect.height;
+
+         context.drawImage(video,
+         (overlayRect.left - videoRect.left) * video.videoWidth / videoRect.width,
+      　  (overlayRect.top - videoRect.top) * video.videoHeight / videoRect.height,
+      　  overlayRect.width * video.videoWidth / videoRect.width,
+      　  overlayRect.height * video.videoHeight / videoRect.height,
+                    0, 0, overlayRect.width, overlayRect.height
+                );
 
         // 画像を表示または保存する処理をここに追加
         const img = canvas.toDataURL('image/png');
