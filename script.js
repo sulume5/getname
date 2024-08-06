@@ -16,13 +16,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
     captureButton.addEventListener('click', function() {
-        const rect = overlay.getBoundingClientRect();
+        /*const rect = overlay.getBoundingClientRect();
         canvas.width = rect.width;
-        canvas.height = rect.height;
-        video.videoWidth = canvas.width;
-        video.videoHeight =canvas.height;
-
-        context.drawImage(video, rect.left, rect.top, rect.width, rect.height, 0, 0, rect.width, rect.height);
+        canvas.height = rect.height;*/
+        
+        context.drawImage(video, 0, 0, 30, 180);
 
         // 画像を表示または保存する処理をここに追加
         const img = canvas.toDataURL('image/png');
