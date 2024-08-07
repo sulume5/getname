@@ -23,7 +23,7 @@ video {
     top: 30px;
     left: 180px;
     width: 30px;
-    height: 180px;
+    height: 170px;
     border: 2px solid red;
     box-sizing: border-box;
     pointer-events: none;
